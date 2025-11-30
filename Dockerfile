@@ -29,6 +29,7 @@ RUN groupadd -g 1000 utorrent && \
         /utorrent/server \
         /utorrent/webui \
         /utorrent/settings \
+        /utorrent/request \
         /utorrent/torrent \
         /utorrent/download && \
     \
@@ -39,9 +40,12 @@ RUN groupadd -g 1000 utorrent && \
     \
     echo 'dir_active: /utorrent/download' > /utorrent/server/utserver.conf && \
     echo 'dir_torrent_files: /utorrent/torrent' >> /utorrent/server/utserver.conf && \
+    echo 'dir_request: /utorrent/request' >> /utorrent/server/utserver.conf && \
     echo 'ut_webui_dir: /utorrent/webui' >> /utorrent/server/utserver.conf && \
     \
     chown -R utorrent:utorrent /utorrent
+
+COPY --chown=utorrent:utorrent --chmod=755 run.sh /usr/local/bin/run.sh
 
 USER utorrent
 VOLUME ["/utorrent/settings", "/utorrent/torrent", "/utorrent/download"]
@@ -49,4 +53,4 @@ EXPOSE 8080 6881
 
 WORKDIR /utorrent/server
 
-CMD ["/utorrent/server/utserver", "-settingspath", "/utorrent/settings", "-configfile", "/utorrent/server/utserver.conf", "-logfile", "/dev/stdout"]
+CMD ["run.sh"]
