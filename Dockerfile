@@ -8,9 +8,9 @@ COPY --from=trusty --chown=root:root --chmod=755 \
     /lib/x86_64-linux-gnu/libcrypto.so.1.0.0 \
     /usr/local/lib/
 
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
 
 RUN groupadd -g 1000 utorrent && \
     useradd -s /bin/bash -u 1000 -g 1000 utorrent && \
